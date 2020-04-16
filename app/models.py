@@ -4,7 +4,7 @@ from . import db
 from sqlalchemy import Column, ForeignKey, Integer, Unicode
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-#from sqlalchemy_ImageAdettach.entity import Image, image_attachment
+from sqlalchemy_imageattach.entity import Image, image_attachment
 
 Base = declarative_base()
 
@@ -18,28 +18,28 @@ class Profile(db.Model):
     email = db.Column(db.String(120), unique = True)
     location = db.Column(db.String(120))
     biography = db.Column(db.String(350))
-    #photo = db.Column(db.image_attachment('UserPicture'))
+    photo = image_attachment('UserPicture')
     created_on = db.Column(db.DATE)
 
     
 
-    def __init__(self,firstname, lastname, gender, email, location, biography):
+    def __init__(self,firstname, lastname, gender, email, location, biography,photo):
         self.firstname = firstname
         self.lastname = lastname
         self.gender = gender
         self.email = email
         self.location = location
         self.biography = biography
-        #self.photo =photo
+        self.photo =photo
 
     def __repr__(self):
         return '<Profile %r %r>' %self.firstname %self.lastname
 
-#class UserPicture(Base, Image):
+class UserPicture(Base, Image):
    # """User picture model."""
 
-    #user_id = Column(Integer, ForeignKey('userid'), primary_key=True)
-    #user = relationship('User')
-    #__tablename__ = 'user_picture'
+    user_id = Column(Integer, ForeignKey('profile.id'), primary_key=True)
+    user = relationship('User')
+    __tablename__ = 'user_picture'
 
         

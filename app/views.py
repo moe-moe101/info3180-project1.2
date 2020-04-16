@@ -39,7 +39,7 @@ def display_specific_profile(userid):
 def profile():
     profile_form = AddProfileForm()
     if request.method =='POST' and profile_form.validate_on_submit():
-        profile = Profile(profile_form.firstname.data, profile_form.lastname.data, profile_form.gender.data, profile_form.email.data, profile_form.location.data, profile_form.biography.data)
+        profile = Profile(profile_form.firstname.data, profile_form.lastname.data, profile_form.gender.data, profile_form.email.data, profile_form.location.data, profile_form.biography.data, profile_form.photo.data)
         db.session.add(profile)
         db.session.commit()
 
@@ -47,7 +47,7 @@ def profile():
         return redirect (url_for('profiles'))
     #else:
         #flash_errors(profile_form)
-    return render_template('profile.html')
+    return render_template('profile.html', form = profile_form)
 
 #Additional routing applicable to all flask apps.
 
